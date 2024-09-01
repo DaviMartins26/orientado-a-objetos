@@ -1,138 +1,302 @@
+import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Pessoa pessoa = null; // Variável para armazenar a instância de Pessoa
-        Banco banco = null; // esta pra armazenar a instância de Banco
+        int option;
+        int escolha;
+
+        // Listas para armazenar disciplinas, alunos e professores
+        ArrayList<Disciplina> disciplinas = new ArrayList<>();
+        ArrayList<Aluno> alunos = new ArrayList<>();
+        ArrayList<Professor> professores = new ArrayList<>();
+
+        System.out.println("Bem vindo");
+        System.out.println("Escolha o que deseja ver sobre");
 
         while (true) {
-            System.out.println("Bem vindo ao Sistema, escolha uma opção:");
-            System.out.println("1 - Cadastrar novo Cliente");
-            System.out.println("2 - Depositar na conta");
-            System.out.println("3 - Sacar da conta");
-            System.out.println("4 - Ver Extrato");
-            System.out.println("5 - Alterar informacao");
-            System.out.println("6 - Sair");
+            System.out.println("1- Disciplina");
+            System.out.println("2- Aluno");
+            System.out.println("3- Professor");
+            System.out.println("4- Sair");
+            System.out.println("Digite sua escolha:");
+            option = sc.nextInt();
+            sc.nextLine();
 
-            int escolha = sc.nextInt();
-            sc.nextLine(); // Limpa o buffer após a leitura do int pq tava dando problema
-
-            switch (escolha) {
+            switch (option) {
                 case 1:
-                    System.out.println("Novo Cadastro:");
-                    System.out.print("Nome: ");
-                    String novoNome = sc.nextLine(); // nextline pra não quebrar o codigo quando tiver espaço no Nome
+                    System.out.println("1- Cadastrar Disciplina");
+                    System.out.println("2- Ver Disciplinas");
+                    System.out.println("3- Adicionar pessoa a Disciplina");
+                    System.out.println("4- Buscar Disciplina por Nome");
+                    escolha = sc.nextInt();
+                    sc.nextLine();
 
-                    System.out.print("CPF: ");
-                    int novoCPF = sc.nextInt();
-                    sc.nextLine(); // Limpar buffer
+                    switch (escolha) {
+                        case 1:
+                            System.out.println("Cadastrando Disciplina...");
+                            System.out.println("Informe o codigo");
+                            int codigo = sc.nextInt();
+                            sc.nextLine();
+                            System.out.println("Informe a materia");
+                            String materia = sc.nextLine();
+                            System.out.println("Nome da Turma:");
+                            String turma = sc.nextLine();
 
-                    System.out.print("Data de Nascimento: ");
-                    String novaDataNasci = sc.nextLine();
+                            Disciplina disciplina = new Disciplina(codigo, materia, turma); // criando disciplina, talvez tinha que see em arrayList
+                            disciplinas.add(disciplina);
+                            break;
 
-                    System.out.print("Renda Mensal: ");
-                    float novaRenda = sc.nextFloat();
-                    sc.nextLine(); // Limpar buffer
+                        case 2:
+                            System.out.println("Disciplinas:"); // é pra printar corretamnete
+                            for (Disciplina d : disciplinas) {
+                                System.out.println(d);
+                            }
+                            break;
 
-                    System.out.print("Telefone: ");
-                    int novoTelefone = sc.nextInt();
-                    sc.nextLine(); // Limpar buffer
-                    // registra a pessoa
-                    pessoa = new Pessoa(novoNome, novoCPF, novaDataNasci, novaRenda, novoTelefone);
+                        case 3:
+                            System.out.println("Adicionar o que?");
+                            System.out.println("1- Aluno");
+                            System.out.println("2- Professor");
+                            System.out.println("3- Voltar");
+                            int escolha2 = sc.nextInt();
+                            sc.nextLine();
 
-                    System.out.print("Número da Conta: ");
-                    int novaConta = sc.nextInt();
-                    sc.nextLine(); // Limpar buffer
+                            switch (escolha2) {
+                                case 1:
+                                    System.out.println("Informe a matrícula do aluno");
+                                    int matri = sc.nextInt();
+                                    sc.nextLine();
+                                    Aluno aluno = buscarAlunoPorMatricula(alunos, matri); // metodo grande
+                                    if (aluno != null) { // se n for nulo, ta correto isso?
+                                        System.out.println("Informe o código da Disciplina para adicionar o aluno");
+                                        int disci = sc.nextInt();
+                                        sc.nextLine();
+                                        Disciplina addAluno = desobrirDisciplina(disciplinas, disci);
+                                        if (addAluno != null) {
+                                            addAluno.adicionarAluno(aluno);
+                                            System.out.println("Aluno adicionado à disciplina.");
+                                        } else {
+                                            System.out.println("Disciplina não encontrada.");
+                                        }
+                                    } else {
+                                        System.out.println("Aluno não encontrado.");
+                                    }
+                                    break;
 
-                    System.out.print("Saldo Inicial: ");
-                    float novoSaldo = sc.nextFloat();
-                    sc.nextLine(); // Limpar buffer
-                    //registra a conta no Banco
-                    banco = new Banco(novaConta, novoSaldo);
-                    System.out.println("Cadastro concluído com Sucesso");
+                                case 2:
+                                    System.out.println("Informe o registro do professor");
+                                    int regis = sc.nextInt();
+                                    sc.nextLine();
+                                    Professor professor = buscarProfessorPorRegistro(professores, regis); // não aguento mais escrever
+                                    if (professor != null) {
+                                        System.out.println("Informe o código da Disciplina para adicionar o professor");
+                                        int disci2 = sc.nextInt();
+                                        sc.nextLine();
+                                        Disciplina addProf = desobrirDisciplina(disciplinas, disci2);
+                                        if (addProf != null) {
+                                            addProf.setProfessor(professor);
+                                            System.out.println("Professor adicionado à disciplina.");
+                                        } else {
+                                            System.out.println("Disciplina não encontrada.");
+                                        }
+                                    } else {
+                                        System.out.println("Professor não encontrado.");
+                                    }
+                                    break;
+
+                                case 3:
+                                    System.out.println("Voltando");
+                                    break;
+                                default:
+                                    System.out.println("Opção Inválida! Digite uma opção válida.");
+                            }
+                            break;
+
+                        case 4:
+                            System.out.println("Informe o nome da disciplina para buscar:");
+                            String nomeDisciplina = sc.nextLine();
+                            Disciplina disciplinaBuscada = buscarDisciplinaPorNome(disciplinas, nomeDisciplina); // como que isso aqui ta funcionando, Deus é mais
+                            if (disciplinaBuscada != null) {
+                                System.out.println(disciplinaBuscada);
+                            } else {
+                                System.out.println("Disciplina não encontrada.");
+                            }
+                            break;
+
+                        default:
+                            System.out.println("Opção Inválida! Digite uma opção válida.");
+                    }
                     break;
 
                 case 2:
-                    if (banco != null) {  // tratamento pra evitar erros fazer isso em todos
-                        System.out.println("Depositar na conta:");
-                        System.out.print("Informe o valor do depósito: ");
-                        float valorDeposito = sc.nextFloat();
-                        sc.nextLine(); // Limpa o bufer
-                        // se isso funcionar significa que eu n sei programar
-                        float novoSaldo1 = banco.getSaldo() + valorDeposito;
-                        banco.setSaldo(novoSaldo1);
-                        System.out.println("Depósito realizado com sucesso! Novo saldo: " + banco.getSaldo());
-                    } else {
-                        System.out.println("Nenhum cliente cadastrado.");
+                    System.out.println("1- Cadastrar Aluno");
+                    System.out.println("2- Editar Informações");
+                    System.out.println("3- Ver Alunos matriculados");
+                    System.out.println("4- Buscar Aluno por Nome");
+                    escolha = sc.nextInt();
+                    sc.nextLine();
+
+                    switch (escolha) {
+                        case 1:
+                            System.out.println("Cadastrando Aluno...");
+                            System.out.println("Informe o número da Matrícula");
+                            int matricula = sc.nextInt();
+                            sc.nextLine();
+                            System.out.println("Nome do Aluno:");
+                            String nome = sc.nextLine();
+                            Aluno novoAluno = new Aluno(matricula, nome);
+                            alunos.add(novoAluno);
+                            break;
+
+                        case 2:
+                            System.out.println("Informe a matrícula do aluno para editar:");
+                            int matriculaEdicao = sc.nextInt();
+                            sc.nextLine();
+                            Aluno alunoEditar = buscarAlunoPorMatricula(alunos, matriculaEdicao);
+                            if (alunoEditar != null) {
+                                System.out.println("Nome atual: " + alunoEditar.getNome());
+                                System.out.println("Digite o novo nome:");
+                                String novoNome = sc.nextLine();
+                                alunoEditar.setNome(novoNome);
+                                System.out.println("Informações do aluno atualizadas.");
+                            } else {
+                                System.out.println("Aluno não encontrado.");
+                            }
+                            break;
+
+                        case 3:
+                            System.out.println("Alunos cadastrados:");
+                            for (Aluno a : alunos) {
+                                System.out.println("Matrícula: " + a.getMatricula() + ", Nome: " + a.getNome());
+                            }
+                            break;
+
+                        case 4:
+                            // aqui eu ja desisti por completo
+                            System.out.println("Informe o nome do aluno para buscar:");
+                            String nomeAluno = sc.nextLine();
+                            Aluno alunoBuscado = buscarAlunoPorNome(alunos, nomeAluno);
+                            if (alunoBuscado != null) {
+                                System.out.println("Matrícula: " + alunoBuscado.getMatricula() + ", Nome: " + alunoBuscado.getNome());
+                            } else {
+                                System.out.println("Aluno não encontrado.");
+                            }
+                            break;
+
+                        default:
+                            System.out.println("Opção Inválida! Digite uma opção válida.");
                     }
                     break;
 
                 case 3:
-                    if (banco != null) { // tratamento
-                        System.out.println("Sacar da conta:");
-                        System.out.print("Informe o valor do saque: ");
-                        float valorSaque = sc.nextFloat();
-                        sc.nextLine(); // Limpa o buffet (to com fome)
-                        // se o de cima funcionou por algum milagre esse deve funcionar
-                        float novoSaldo2 = banco.getSaldo() - valorSaque;
-                        banco.setSaldo(novoSaldo2);
-                        System.out.println("Saque realizado com sucesso! Novo saldo: " + banco.getSaldo());
-                    } else {
-                        System.out.println("Nenhum cliente cadastrado.");
+                    System.out.println("1- Cadastrar Professor");
+                    System.out.println("2- Editar Informações");
+                    System.out.println("3- Ver Professores");
+                    escolha = sc.nextInt();
+                    sc.nextLine();
+
+                    switch (escolha) {
+                        case 1:
+                            System.out.println("Cadastrando Professor...");
+                            System.out.println("Informe o número do Registro");
+                            int registro = sc.nextInt();
+                            sc.nextLine();
+                            System.out.println("Nome do Professor:");
+                            String nomeProf = sc.nextLine();
+                            Professor novoProfessor = new Professor(registro, nomeProf);
+                            professores.add(novoProfessor);
+                            break;
+
+                        case 2:
+                            System.out.println("Informe o registro do professor para editar:");
+                            int registroEdicao = sc.nextInt();
+                            sc.nextLine();
+                            Professor professorEditar = buscarProfessorPorRegistro(professores, registroEdicao);
+                            if (professorEditar != null) {
+                                System.out.println("Nome atual: " + professorEditar.getNome());
+                                System.out.println("Digite o novo nome:");
+                                String novoNome = sc.nextLine();
+                                professorEditar.setNome(novoNome);
+                                System.out.println("Informações do professor atualizadas.");
+                            } else {
+                                System.out.println("Professor não encontrado.");
+                            }
+                            break;
+
+                        case 3:
+                            System.out.println("Professores cadastrados:");
+                            for (Professor p : professores) {
+                                System.out.println("Registro: " + p.getRegistro() + ", Nome: " + p.getNome());
+                            }
+                            break;
+
+                        default:
+                            System.out.println("Opção Inválida! Digite uma opção válida.");
                     }
                     break;
 
-                case 4: // tratamento psicilogico necessario
-                    if (pessoa != null && banco != null) {
-                        System.out.println("Ver Extrato:");
-                        pessoa.extratoPessoa();
-                        banco.extratoCliente();
-                    } else {
-                        System.out.println("Nenhum cliente cadastrado.");
-                    }
-                    break;
-                    // por incrivel que pareça acertei isso o extrato de primeira
-                case 5:
-                    if (pessoa != null) {
-                        System.out.println("1 - Alterar Telefone:");
-                        System.out.println("2 - Alterar Renda:");
-                        int escolha2 = sc.nextInt();
-                        sc.nextLine(); // o buffer
-
-                        switch (escolha2) {
-                            case 1:
-                                System.out.print("Informe novo Telefone: ");
-                                int novoTelefone2 = sc.nextInt();
-                                sc.nextLine();
-
-                                pessoa.setTelefone(novoTelefone2);
-                                System.out.println("Telefone alterado para: " + pessoa.getTelefone());
-                                break;
-                            case 2:
-                                System.out.print("Informe nova Renda: ");
-                                float novaRenda2 = sc.nextFloat();
-                                sc.nextLine();
-
-                                pessoa.setRenda(novaRenda2);
-                                System.out.println("Renda alterada para: " + pessoa.getRenda()); // nunca vou entender pq o renda tem que ser com R maiusculo
-                                break;
-                            default:
-                                System.out.println("Opção inválida, por favor escolha uma opção válida.");
-                        }
-                    } else {
-                        System.out.println("Nenhum cliente cadastrado.");
-                    }
-                    break;
-
-                case 6:
-                    System.out.println("Saindo do sistema...");
-                    System.exit(0); // na teoria isso vai tira ro while eterno
+                case 4:
+                    System.out.println("Obrigado por utilizar nosso sistema!");
+                    sc.close();
+                    return;
 
                 default:
-                    System.out.println("Opção inválida, por favor escolha uma opção válida.");
-                    break;
+                    System.out.println("Opção Inválida! Digite uma opção válida.");
             }
         }
+    }
+
+    // Método para encontrar uma disciplina por código
+    // acho que o nome destes metodos tão grandes, e não sei se  usar Static ta correto, talvez deveria fazer isso na classe
+    private static Disciplina desobrirDisciplina(ArrayList<Disciplina> disciplinas, int codigo) {
+        for (Disciplina d : disciplinas) {
+            if (d.getCodigo() == codigo) {
+                return d;
+            }
+        }
+        return null;
+    }
+
+    // Método para encontrar uma disciplina por nome
+    private static Disciplina buscarDisciplinaPorNome(ArrayList<Disciplina> disciplinas, String nome) {
+        for (Disciplina d : disciplinas) {
+            if (d.getMateria().equalsIgnoreCase(nome)) {
+                return d;
+            }
+        }
+        return null;
+    }
+
+    // Método para buscar um aluno por matrícula
+    private static Aluno buscarAlunoPorMatricula(ArrayList<Aluno> alunos, int matricula) {
+        for (Aluno a : alunos) {
+            if (a.getMatricula() == matricula) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    // Método para buscar um aluno por nome
+    private static Aluno buscarAlunoPorNome(ArrayList<Aluno> alunos, String nome) {
+        for (Aluno a : alunos) {
+            if (a.getNome().equalsIgnoreCase(nome)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    // Método para buscar um professor por registro
+    private static Professor buscarProfessorPorRegistro(ArrayList<Professor> professores, int registro) {
+        for (Professor p : professores) {
+            if (p.getRegistro() == registro) {
+                return p;
+            }
+        }
+        return null;
     }
 }
