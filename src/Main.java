@@ -50,6 +50,7 @@ public class Main {
                             break;
                         default:
                             System.out.println("Escolha Invalida");
+                            break;
                     }
                 // por algum motivo esta entrando no case 2 mesmo escolhendo 1
                 case 2:
@@ -64,19 +65,17 @@ public class Main {
                             System.out.println("Cadastrando Musica...");
                             System.out.println("Informe o nome");
                             String nome = sc.nextLine();
-                            sc.nextLine();
                             System.out.println("Informe o Estilo");
                             String estilo = sc.nextLine();
-                            sc.nextLine();
                             System.out.println("informe a Data de Lançamento");
                             String dataLancamento = sc.nextLine();
-                            sc.nextLine();
                             System.out.println("Informe o tempo de duração da musica");
+                            sc.next();
                             float tempo = sc.nextFloat();
-                            sc.nextLine();
                             // inverti umas ordens mas ta resolvivo, eu acho
                             // cadastrar assim ta errado pq toda vez que vc cadastrar uma musica vai ou da erro, ou vou coisar por cima da musica3
                             Musica musica3 = new Musica(tempo,estilo,dataLancamento,nome,artista);
+                            break;
 
                         case 2:
                             System.out.println("Artista: " + artista.getNomeArt());
@@ -89,11 +88,13 @@ public class Main {
                             break;
                         default:
                             System.out.println("Escolha Invalida");
+                            break;
                     }
                 case 3:
-                    return;
+                    break;
                 default:
                     System.out.println("Escolha Invalida");
+                    break;
             }
 
 
