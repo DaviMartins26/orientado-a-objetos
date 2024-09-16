@@ -32,9 +32,14 @@ public class Main {
                     int escolha2 = sc.nextInt();
                     switch (escolha2) {
                         case 1:
-                            System.out.println("em dev");
+                            // Não deveria ser feito assim, mas acho que da certo
+                            System.out.println("Artista: " + artista.getNomeArt());
+                            for (Musica musica : artista.getMusicas()) {
+                                System.out.println("Ouvindo" + musica.getNomeMusic()+" do Artista: "+ artista.getNomeart());
+                                System.out.println("Ouvindo musica... Enter para Proxima");
+                                sc.nextLine(); // por algum motivo so funciona para parar no segundo print
+                            }
                             break;
-
                         case 2:
                             ouvinte.tornarPremium();
                             break;
@@ -43,7 +48,10 @@ public class Main {
                             break;
                         case 4:
                             break;
+                        default:
+                            System.out.println("Escolha Invalida");
                     }
+                // por algum motivo esta entrando no case 2 mesmo escolhendo 1
                 case 2:
                     System.out.println("Logado como "+ artista.getNomeArt());
                     System.out.println("1-Adicionar musica");
@@ -52,15 +60,20 @@ public class Main {
                     int escolha3 = sc.nextInt();
                     switch (escolha3) {
                         case 1:
+                            sc.nextLine();
                             System.out.println("Cadastrando Musica...");
                             System.out.println("Informe o nome");
                             String nome = sc.nextLine();
+                            sc.nextLine();
                             System.out.println("Informe o Estilo");
                             String estilo = sc.nextLine();
+                            sc.nextLine();
                             System.out.println("informe a Data de Lançamento");
                             String dataLancamento = sc.nextLine();
+                            sc.nextLine();
                             System.out.println("Informe o tempo de duração da musica");
                             float tempo = sc.nextFloat();
+                            sc.nextLine();
                             // inverti umas ordens mas ta resolvivo, eu acho
                             // cadastrar assim ta errado pq toda vez que vc cadastrar uma musica vai ou da erro, ou vou coisar por cima da musica3
                             Musica musica3 = new Musica(tempo,estilo,dataLancamento,nome,artista);
@@ -68,12 +81,14 @@ public class Main {
                         case 2:
                             System.out.println("Artista: " + artista.getNomeArt());
                             for (Musica musica : artista.getMusicas()) {
-                                System.out.println(musica);
+                                System.out.println(musica.getNomeMusic() +"Duração de "+musica.getTempo()+" mim. Estilo :" + musica.getEstilo());
                             }
-                            break;
+                            break; // não era pro codio parar auqi mas ta parando as vezes
 
                         case 3:
                             break;
+                        default:
+                            System.out.println("Escolha Invalida");
                     }
                 case 3:
                     return;

@@ -24,5 +24,8 @@ public class Artista extends Pessoa {
     public ArrayList<Musica> getMusicas() {
         return musicas;
     }
+    public String getNomeart(){
+        return nomeArt;
+    }
 }
 

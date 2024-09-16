@@ -13,4 +13,13 @@ public class Musica {
         this.artista = artista;
     }
 
+    public String getNomeMusic(){
+        return nomeMusic;
+    }
+    public float getTempo(){
+        return tempo;
+    }
+    public String getEstilo(){
+        return estilo;
+    }
 }
