@@ -3,10 +3,11 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        // Sei que isso não é o metodo correto de se criar as coisas, mas ainda to aprendendo a lidar com arraylist, daria pra criar uma de artistas e ouvintes
+        // mas eu n consigo ainda saber como resgatar o "codigo" de cada um e fazer alterações nele
         Ouvinte ouvinte = new Ouvinte("davi@outlook.com", 984609554, "Davi", "08/08/2001", "senha");
-        Artista artista = new Artista("jurson@gmail.com", 989898989, "Jurandir Adilson", "29/04/1999", "senha", "Banda do Rock");
+        Artista artista = new Artista("jurandir@gmail.com", 989898989, "Jurandir Adilson", "29/04/1999", "senha", "Banda do Rock");
 
-        // Adicionando músicas ao artista
         Musica musica1 = new Musica(3.6f, "Rock", "17/05/2017", "Rock pesado Cristão", artista);
         Musica musica2 = new Musica(22.6f, "Pagode", "Ontem", "Sofrendo por Amor", artista);
         artista.adicionarMusica(musica1);
@@ -22,7 +23,7 @@ public class Main {
 
             int escolha = sc.nextInt();
             sc.nextLine();
-
+            // tive que deixar em if pq em swith tava dando algum erro, que sempre entrava no case 2, mesmo escolhendo o 1
             if (escolha == 1) {
                 System.out.println("Logado como " + ouvinte.getNome());
                 System.out.println("1-Ouvir Música");
@@ -37,8 +38,8 @@ public class Main {
                         System.out.println("Artista: " + artista.getNomeArt());
                         for (Musica musica : artista.getMusicas()) {
                             System.out.println("Ouvindo " + musica.getNomeMusic() + " do Artista: " + artista.getNomeArt());
-                            System.out.println("Ouvindo música... Pressione Enter para próxima");
-                            sc.nextLine(); // Pausa para a próxima música
+                            System.out.println("Ouvindo música... Pressione Enter para próxima"); // é pra parar o codigo até apertar Enter
+                            sc.nextLine(); // Pausa para a próxima música eu acho
                         }
                         break;
                     case 2:
@@ -53,7 +54,8 @@ public class Main {
                         System.out.println("Escolha Inválida");
                         break;
                 }
-            } else if (escolha == 2) {
+            }
+            else if (escolha == 2) {
                 System.out.println("Logado como " + artista.getNomeArt());
                 System.out.println("1-Adicionar Música");
                 System.out.println("2-Ver Minhas Músicas");
@@ -93,7 +95,8 @@ public class Main {
                         System.out.println("Escolha Inválida");
                         break;
                 }
-            } else {
+            }
+            else {
                 System.out.println("Escolha Inválida");
                 break;
             }
